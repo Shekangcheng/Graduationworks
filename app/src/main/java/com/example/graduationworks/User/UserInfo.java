@@ -46,7 +46,7 @@ public class UserInfo extends Fragment implements View.OnClickListener {
     Button top_up, U_info_change, pop_modification_confirm;
     int Year, Month, Day, control;
     String time, birthday;
-    TextView U_F_i_name, U_F_i_gold, U_F_i_gender, U_F_i_age, U_F_i_phone, U_F_i_birthday, U_F_i_grade, U_F_i_e_mail, U_F_i_site, modification_hint,U_suffix;
+    TextView U_F_i_name, U_F_i_gold, U_F_i_gender, U_F_i_age, U_F_i_phone, U_F_i_birthday, U_F_i_grade, U_F_i_e_mail, U_F_i_site, modification_hint;
     EditText modification_content;
     ConstraintLayout outer;
     Popup pop;
@@ -80,7 +80,6 @@ public class UserInfo extends Fragment implements View.OnClickListener {
         U_F_i_e_mail = view.findViewById(R.id.U_F_i_e_mail);
         U_F_i_site = view.findViewById(R.id.U_F_i_site);
         U_info_change = view.findViewById(R.id.U_info_change);
-        U_suffix=view.findViewById(R.id.U_suffix);
         view.findViewById(R.id.U_F_i_name).setOnClickListener(this);
         view.findViewById(R.id.linearLayout1).setOnClickListener(this);
         view.findViewById(R.id.linearLayout3).setOnClickListener(this);
@@ -213,7 +212,7 @@ public class UserInfo extends Fragment implements View.OnClickListener {
                                     bmobUser.setValue("phone", U_F_i_phone.getText().toString());
                                     bmobUser.setValue("birthday", U_F_i_birthday.getText().toString());
                                     bmobUser.setValue("grade", U_F_i_grade.getText().toString());
-                                    bmobUser.setValue("e_mail", U_F_i_e_mail.getText().toString()+U_suffix.getText().toString());
+                                    bmobUser.setValue("e_mail", U_F_i_e_mail.getText().toString());
                                     bmobUser.setValue("site", U_F_i_site.getText().toString());
                                     bmobUser.update(ID, new UpdateListener() {
                                         @Override

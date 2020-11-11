@@ -1,4 +1,5 @@
 package com.example.graduationworks.Teacher;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -26,6 +27,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.graduationworks.LoginActivity;
 import com.example.graduationworks.R;
 import com.example.graduationworks.RegisterActivity;
 import com.example.graduationworks.SQL.Teacher;
@@ -108,7 +110,7 @@ public class TeacherHomepage extends Fragment {
                         i.setDate(date);
                         String state = interaction.getState();
                         i.setState(state);
-                        String id=interaction.getObjectId();
+                        String id = interaction.getObjectId();
                         i.setObjectId(id);
                         interactionData.add(i);
                         //设置数据
@@ -199,17 +201,32 @@ public class TeacherHomepage extends Fragment {
         adapter.setOnItemClickListener(new THAdapter.OnItemClickListener() {
             @Override
             public void onClick(int position) {
-                Popup pop = Popup.getPop(getContext(), R.layout.date_pop_delete);
-                PopupWindow win = pop.getWin();
-                win.showAtLocation(view, Gravity.CENTER, 0, 0);
-                View gender_popView = pop.getView();
-                Button date_pop_f = gender_popView.findViewById(R.id.date_pop_f);
-                date_pop_f.setOnClickListener(new TeacherHomepage.popItemClick(win));
-                Button date_pop_t = gender_popView.findViewById(R.id.date_pop_t);
-                date_pop_t.setOnClickListener(new TeacherHomepage.popItemClick(win));
-                ConstraintLayout date_outer=gender_popView.findViewById(R.id.date_outer);
-                date_outer.setOnClickListener(new TeacherHomepage.popItemClick(win));
-                list_position=position;
+                list_position = position;
+                BmobQuery<interaction> cursor = new BmobQuery<>();
+                cursor.addWhereNotEqualTo("U_account", "");
+                cursor.findObjects(new FindListener<interaction>() {
+                    @Override
+                    public void done(List<interaction> list, BmobException e) {
+                        if (e == null && list.size() > 0) {
+                            interaction date = interactionData.get(list_position);
+                            String U_account = date.getU_account();
+                            Intent intent = new Intent(getContext(), T_UserinfoActivity.class);
+                            intent.putExtra("U_account", U_account);
+                            startActivity(intent);
+                        } else {
+                            Popup pop = Popup.getPop(getContext(), R.layout.date_pop_delete);
+                            PopupWindow win = pop.getWin();
+                            win.showAtLocation(view, Gravity.CENTER, 0, 0);
+                            View gender_popView = pop.getView();
+                            Button date_pop_f = gender_popView.findViewById(R.id.date_pop_f);
+                            date_pop_f.setOnClickListener(new TeacherHomepage.popItemClick(win));
+                            Button date_pop_t = gender_popView.findViewById(R.id.date_pop_t);
+                            date_pop_t.setOnClickListener(new TeacherHomepage.popItemClick(win));
+                            ConstraintLayout date_outer = gender_popView.findViewById(R.id.date_outer);
+                            date_outer.setOnClickListener(new TeacherHomepage.popItemClick(win));
+                        }
+                    }
+                });
             }
         });
     }
@@ -217,12 +234,14 @@ public class TeacherHomepage extends Fragment {
 
     class popItemClick implements View.OnClickListener {
         PopupWindow win;
+
         popItemClick(PopupWindow win) {
             this.win = win;
         }
+
         @Override
         public void onClick(View v) {
-            switch (v.getId()){
+            switch (v.getId()) {
                 case R.id.date_pop_f:
                     win.dismiss();
                     break;
@@ -233,10 +252,10 @@ public class TeacherHomepage extends Fragment {
                     i.delete(new UpdateListener() {
                         @Override
                         public void done(BmobException e) {
-                            if(e==null){
+                            if (e == null) {
                                 Toast.makeText(getContext(), "删除成功", Toast.LENGTH_SHORT).show();
                                 DATES();
-                            }else{
+                            } else {
                                 Toast.makeText(getContext(), "删除失败", Toast.LENGTH_SHORT).show();
                             }
                         }

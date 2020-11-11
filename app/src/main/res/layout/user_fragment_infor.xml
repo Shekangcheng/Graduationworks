@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline6">
 
         <ImageView
-            android:id="@+id/TI_headportrait"
+            android:id="@+id/UI_headportrait"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@mipmap/headportrait_v"
@@ -37,9 +37,9 @@
             android:background="@null"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/TI_headportrait"
-            app:layout_constraintStart_toStartOf="@+id/TI_headportrait"
-            app:layout_constraintTop_toBottomOf="@+id/TI_headportrait"
+            app:layout_constraintEnd_toEndOf="@+id/UI_headportrait"
+            app:layout_constraintStart_toStartOf="@+id/UI_headportrait"
+            app:layout_constraintTop_toBottomOf="@+id/UI_headportrait"
             app:layout_constraintVertical_bias="0.5" />
 
         <TextView
@@ -49,9 +49,9 @@
             android:text="金     币"
             android:textColor="#fff"
             android:textSize="28sp"
-            app:layout_constraintBottom_toBottomOf="@+id/TI_headportrait"
+            app:layout_constraintBottom_toBottomOf="@+id/UI_headportrait"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/TI_headportrait"
+            app:layout_constraintStart_toEndOf="@+id/UI_headportrait"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.25" />
 
@@ -248,7 +248,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:gravity="center"
+            android:gravity="right"
             android:textSize="20sp" />
         <TextView
             android:id="@+id/U_suffix"
@@ -273,7 +273,7 @@
         <TextView
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:text="地址"
+            android:text="详细地址"
             android:layout_marginLeft="20dp"
             android:textSize="20sp" />
 
@@ -283,7 +283,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="center"
-            android:textSize="20sp" />
+            android:textSize="12sp" />
     </LinearLayout>
 
     <Button
