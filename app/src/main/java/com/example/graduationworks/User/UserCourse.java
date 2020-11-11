@@ -14,9 +14,11 @@ import com.example.graduationworks.R;
 import com.example.graduationworks.SQL.Teacher;
 import com.example.graduationworks.SQL.interaction;
 import com.example.graduationworks.toolkit.AppContext;
+import com.example.graduationworks.toolkit.UCAdapter;
 import com.example.graduationworks.toolkit.UHAdapter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
@@ -25,9 +27,9 @@ import cn.bmob.v3.listener.FindListener;
 
 public class UserCourse extends Fragment {
     RecyclerView course_list;
-    private List<Teacher> mTeacherData = new ArrayList<>();
+    private List<interaction> mTeacherData = new ArrayList<>();
     private static final String TAG = "提示";
-    private UHAdapter adapter;
+    private UCAdapter adapter;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -39,7 +41,7 @@ public class UserCourse extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initialize(view);
-        Teachers();
+        DATES();
     }
 
     private void initialize(View view){
@@ -47,33 +49,34 @@ public class UserCourse extends Fragment {
         //设置布局管理器
         course_list.setLayoutManager(new LinearLayoutManager(getContext()));
         //设置适配器
-        adapter = new UHAdapter();
+        adapter = new UCAdapter();
         course_list.setAdapter(adapter);
     }
 
-    private void Teachers() {
+    private void DATES() {
         //设置数据
         BmobQuery<interaction> query = new BmobQuery<>();
-        query.addWhereEqualTo("account",AppContext.account);
+        query.addWhereEqualTo("U_account",AppContext.account);
         query.findObjects(new FindListener<interaction>() {
             @Override
             public void done(List<interaction> list, BmobException e) {
                 if (e == null) {
-                    Log.d(TAG, "查询到数据==>" + list.size());
+                    Log.d(TAG, "UserCou查询到数据==>" + list.size());
                     //封装数据
                     mTeacherData.clear();
-                    for (interaction i : list) {
+                    for (interaction interaction : list) {
                         //实例化
-                        Teacher t = new Teacher();
-                        String teacherName = i.getT_name();
-                        t.setAccount(teacherName);
-                        String teacherPhone = i.getT_phone();
-                        t.setAccount(teacherPhone);
-                        mTeacherData.add(t);
+                        interaction i = new interaction();
+                        String teacherName = interaction.getT_name();
+                        i.setT_name(teacherName);
+                        String teacherPhone = interaction.getT_phone();
+                        i.setT_phone(teacherPhone);
+                        mTeacherData.add(i);
                         //设置数据
                         if (adapter != null) {
-                            adapter.setData(mTeacherData);
+                            adapter.setUCata(mTeacherData);
                         }
+                        adapter.notifyDataSetChanged();
                     }
                 } else {
                     int errorCode = e.getErrorCode();

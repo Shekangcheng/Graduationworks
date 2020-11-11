@@ -74,8 +74,6 @@ public class ReservationActivity extends AppCompatActivity {
                 if (e == null) {
                     interactionData.clear();
                     Log.d(TAG, "查询到数据==>" + list);
-                    //封装数据
-                    //interactionData.clear();
                     for (interaction interaction : list) {
                         //实例化
                         interaction i = new interaction();

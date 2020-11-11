@@ -9,12 +9,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.graduationworks.R;
 import com.example.graduationworks.SQL.Teacher;
+import com.example.graduationworks.SQL.interaction;
 import java.util.ArrayList;
 import java.util.List;
 public class UCAdapter extends RecyclerView.Adapter<UCAdapter.ViewHolder> {
 
     private Context context;
-    private List<Teacher> mData = new ArrayList<>();
+    private List<interaction> mData = new ArrayList<>();
     @NonNull
     @Override
     public UCAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -27,8 +28,8 @@ public class UCAdapter extends RecyclerView.Adapter<UCAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull UCAdapter.ViewHolder holder, int position) {
         //获取条目实例
-        Teacher teacher = mData.get(position);
-        holder.setItemData(teacher);
+        interaction course = mData.get(position);
+        holder.setItemData(course);
     }
 
     @Override
@@ -36,7 +37,7 @@ public class UCAdapter extends RecyclerView.Adapter<UCAdapter.ViewHolder> {
         return mData.size();
     }
 
-    public void setTHData(List<Teacher> teachers) {
+    public void setUCata(List<interaction> teachers) {
         mData.clear();
         mData.addAll(teachers);
         notifyDataSetChanged();
@@ -53,12 +54,12 @@ public class UCAdapter extends RecyclerView.Adapter<UCAdapter.ViewHolder> {
             course_T_phone=itemView.findViewById(R.id.course_T_phone);
         }
 
-        public void setItemData(Teacher teacher) {
+        public void setItemData(interaction course) {
             //姓名
-            String teacherName = teacher.getName();
+            String teacherName = course.getT_name();
             course_T_name.setText(teacherName);
             //电话
-            String teacher_phone = teacher.getPhone();
+            String teacher_phone = course.getT_phone();
             course_T_phone.setText(teacher_phone);
         }
     }

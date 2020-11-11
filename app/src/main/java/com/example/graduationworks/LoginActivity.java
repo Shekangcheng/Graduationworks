@@ -59,7 +59,10 @@ public class LoginActivity extends AppCompatActivity {
                             } else {
                                 int errorCode = e.getErrorCode();
                                 Log.d(TAG, "错误信息 ==> " + e.getMessage() + "\t错误码 ==> " + errorCode);
-                                Toast.makeText(LoginActivity.this, "账号密码错误", Toast.LENGTH_SHORT).show();
+                                if(e.getMessage().equals("createSubscription failed:The network is not available,please check your network!(9016)")){
+                                    Toast.makeText(LoginActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
+                                }
+                                else {Toast.makeText(LoginActivity.this, "账号密码错误", Toast.LENGTH_SHORT).show();}
                             }
                         }
                     });
@@ -88,7 +91,10 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             int errorCode = e.getErrorCode();
                             Log.d(TAG, "错误信息 ==> " + e.getMessage() + "\t错误码 ==> " + errorCode);
-                            Toast.makeText(LoginActivity.this, "账号密码错误", Toast.LENGTH_SHORT).show();
+                            if(e.getMessage().equals("createSubscription failed:The network is not available,please check your network!(9016)")){
+                                Toast.makeText(LoginActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
+                            }
+                            else {Toast.makeText(LoginActivity.this, "账号密码错误", Toast.LENGTH_SHORT).show();}
                         }
                     }
                 });
