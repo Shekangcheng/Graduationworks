@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.example.graduationworks.ForgetPassword.AccountNumber;
 import com.example.graduationworks.SQL.Teacher;
 import com.example.graduationworks.SQL.User;
@@ -22,6 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
     EditText L_user, L_password;
     String E_user, E_password,identification;
+    ConstraintLayout cl_loading,cl_loginContainer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +36,8 @@ public class LoginActivity extends AppCompatActivity {
         L_user = findViewById(R.id.L_user);
         L_password = findViewById(R.id.L_password);
         identification= AppContext.identification;
+        cl_loading = findViewById(R.id.cl_loading);
+        cl_loginContainer = findViewById(R.id.cl_loginContainer);
     }
 
     public void Login(View view) {
@@ -41,6 +46,10 @@ public class LoginActivity extends AppCompatActivity {
         //用户登录
         if(identification.equals("user")){
             if (!E_user.equals("")) {
+                //加载状态
+                cl_loading.setVisibility(View.VISIBLE);
+                cl_loginContainer.setVisibility(View.GONE);
+                //
                 BmobQuery<User> cursor = new BmobQuery<>();
                 cursor.addWhereEqualTo("account", E_user);
                 cursor.addWhereEqualTo("password", E_password);
@@ -49,14 +58,22 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void done(List<User> list, BmobException e) {
                             if (e == null && list.size() > 0) {
+                                //
+                                cl_loading.setVisibility(View.GONE);
+                                cl_loginContainer.setVisibility(View.VISIBLE);
+                                //
                                 Intent intent = new Intent(LoginActivity.this, UserActivity.class);
                                 AppContext.account = E_user;
                                 startActivity(intent);
                                 LoginActivity.this.finish();
                             } else {
+                                //
+                                cl_loading.setVisibility(View.GONE);
+                                cl_loginContainer.setVisibility(View.VISIBLE);
                                 int errorCode = e.getErrorCode();
                                 Log.d(TAG, "错误信息 ==> " + e.getMessage() + "\t错误码 ==> " + errorCode);
                                 if(e.getMessage().equals("createSubscription failed:The network is not available,please check your network!(9016)")){
+                                    //
                                     Toast.makeText(LoginActivity.this, "网络异常", Toast.LENGTH_SHORT).show();
                                 }
                                 else {Toast.makeText(LoginActivity.this, "账号密码错误", Toast.LENGTH_SHORT).show();}
@@ -74,6 +91,10 @@ public class LoginActivity extends AppCompatActivity {
         //教师登录
         else{
             if (!E_user.equals("")) {
+                //加载状态
+                cl_loading.setVisibility(View.VISIBLE);
+                cl_loginContainer.setVisibility(View.GONE);
+                //
                 BmobQuery<Teacher> cursor = new BmobQuery<>();
                 cursor.addWhereEqualTo("account", E_user);
                 cursor.addWhereEqualTo("password", E_password);
@@ -81,11 +102,19 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void done(List<Teacher> list, BmobException e) {
                         if (e == null && list.size() > 0) {
+                            //加载状态
+                            cl_loading.setVisibility(View.GONE);
+                            cl_loginContainer.setVisibility(View.VISIBLE);
+                            //
                             Intent intent = new Intent(LoginActivity.this, TeacherActivity.class);
                             AppContext.account=E_user;
                             startActivity(intent);
                             LoginActivity.this.finish();
                         } else {
+                            //加载状态
+                            cl_loading.setVisibility(View.GONE);
+                            cl_loginContainer.setVisibility(View.VISIBLE);
+                            //
                             int errorCode = e.getErrorCode();
                             Log.d(TAG, "错误信息 ==> " + e.getMessage() + "\t错误码 ==> " + errorCode);
                             if(e.getMessage().equals("createSubscription failed:The network is not available,please check your network!(9016)")){

@@ -8,104 +8,143 @@
     android:orientation="vertical"
     tools:context=".LoginActivity">
 
-   <ImageView
+   <androidx.constraintlayout.widget.ConstraintLayout
+       android:id="@+id/cl_loginContainer"
        android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_marginVertical="40dp"
-       android:gravity="center"
-       android:src="@mipmap/user"
-       android:text="logo"
-       app:layout_constraintBottom_toTopOf="@+id/L_user"
+       android:layout_height="match_parent">
+
+      <ImageView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginVertical="40dp"
+          android:gravity="center"
+          android:src="@mipmap/user"
+          android:text="logo"
+          app:layout_constraintBottom_toTopOf="@+id/L_user"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintHorizontal_bias="0.0"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:layout_constraintVertical_bias="0.7" />
+
+      <EditText
+          android:id="@+id/L_user"
+          android:layout_width="match_parent"
+          android:layout_height="50dp"
+          android:layout_marginBottom="20dp"
+          android:background="@drawable/circular"
+          android:gravity="center"
+          android:hint="请输入用户账号"
+          android:inputType="number"
+          android:lines="1"
+          android:textSize="24sp"
+          app:layout_constraintBottom_toTopOf="@+id/L_password"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintHorizontal_bias="0.0"
+          app:layout_constraintStart_toStartOf="parent" />
+
+      <EditText
+          android:id="@+id/L_password"
+          android:layout_width="match_parent"
+          android:layout_height="50dp"
+          android:layout_marginVertical="20dp"
+          android:background="@drawable/circular"
+          android:gravity="center"
+          android:hint="请输入用户密码"
+          android:inputType="textPassword"
+          android:lines="1"
+          android:textSize="24sp"
+          app:layout_constraintBottom_toTopOf="@+id/imageView2"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent" />
+
+      <ImageView
+          android:id="@+id/imageView2"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:onClick="Login"
+          android:src="@mipmap/arrows"
+          app:layout_constraintBottom_toTopOf="@+id/guideline"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent" />
+
+      <GridLayout
+          android:id="@+id/gridLayout"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="bottom"
+          app:layout_constraintBottom_toBottomOf="parent"
+          tools:layout_editor_absoluteX="26dp">
+
+      </GridLayout>
+
+      <androidx.constraintlayout.widget.Guideline
+          android:id="@+id/guideline"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:orientation="horizontal"
+          app:layout_constraintGuide_percent="0.55" />
+
+      <androidx.constraintlayout.widget.Guideline
+          android:id="@+id/guideline4"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          app:layout_constraintGuide_percent="0.97" />
+
+      <TextView
+          android:id="@+id/L_FP"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="left"
+          android:onClick="L_FP"
+          android:text="忘记密码"
+          android:textSize="16sp"
+          app:layout_constraintBottom_toTopOf="@+id/guideline4"
+          app:layout_constraintStart_toStartOf="parent" />
+
+      <TextView
+          android:id="@+id/L_register"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:onClick="Register"
+          android:text="注册账号"
+          android:textSize="16sp"
+          app:layout_constraintBottom_toTopOf="@+id/guideline4"
+          app:layout_constraintEnd_toEndOf="parent" />
+
+   </androidx.constraintlayout.widget.ConstraintLayout>
+
+   <androidx.constraintlayout.widget.ConstraintLayout
+       android:id="@+id/cl_loading"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:visibility="gone"
+       app:layout_constraintBottom_toBottomOf="parent"
        app:layout_constraintEnd_toEndOf="parent"
        app:layout_constraintHorizontal_bias="0.0"
        app:layout_constraintStart_toStartOf="parent"
        app:layout_constraintTop_toTopOf="parent"
-       app:layout_constraintVertical_bias="0.7" />
+       app:layout_constraintVertical_bias="0.0">
 
-   <EditText
-       android:id="@+id/L_user"
-       android:layout_width="match_parent"
-       android:layout_height="50dp"
-       android:layout_marginBottom="20dp"
-       android:background="@drawable/circular"
-       android:gravity="center"
-       android:hint="请输入用户账号"
-       android:lines="1"
-       android:textSize="24sp"
-       android:inputType="number"
-       app:layout_constraintBottom_toTopOf="@+id/L_password"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintHorizontal_bias="0.0"
-       app:layout_constraintStart_toStartOf="parent" />
+      <com.example.graduationworks.toolkit.LoadingView
+          android:id="@+id/loadingView"
+          android:layout_width="50dp"
+          android:layout_height="50dp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
 
-   <EditText
-       android:id="@+id/L_password"
-       android:layout_width="match_parent"
-       android:layout_height="50dp"
-       android:layout_marginVertical="20dp"
-       android:background="@drawable/circular"
-       android:gravity="center"
-       android:hint="请输入用户密码"
-       android:lines="1"
-       android:inputType="textPassword"
-       android:textSize="24sp"
-       app:layout_constraintBottom_toTopOf="@+id/imageView2"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintStart_toStartOf="parent" />
+      <TextView
+          android:id="@+id/textView3"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="16dp"
+          android:text="登录中..."
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/loadingView" />
 
-   <ImageView
-       android:id="@+id/imageView2"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:onClick="Login"
-       android:src="@mipmap/arrows"
-       app:layout_constraintBottom_toTopOf="@+id/guideline"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintStart_toStartOf="parent" />
-
-   <GridLayout
-       android:id="@+id/gridLayout"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_gravity="bottom"
-       app:layout_constraintBottom_toBottomOf="parent"
-       tools:layout_editor_absoluteX="26dp">
-
-   </GridLayout>
-
-   <androidx.constraintlayout.widget.Guideline
-       android:id="@+id/guideline"
-       android:layout_width="wrap_content"
-       android:layout_height="match_parent"
-       android:orientation="horizontal"
-       app:layout_constraintGuide_percent="0.55" />
-
-   <androidx.constraintlayout.widget.Guideline
-       android:id="@+id/guideline4"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:orientation="horizontal"
-       app:layout_constraintGuide_percent="0.97" />
-
-   <TextView
-       android:id="@+id/L_FP"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_gravity="left"
-       android:onClick="L_FP"
-       android:text="忘记密码"
-       android:textSize="16sp"
-       app:layout_constraintBottom_toTopOf="@+id/guideline4"
-       app:layout_constraintStart_toStartOf="parent" />
-
-   <TextView
-       android:id="@+id/L_register"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:onClick="Register"
-       android:text="注册账号"
-       android:textSize="16sp"
-       app:layout_constraintBottom_toTopOf="@+id/guideline4"
-       app:layout_constraintEnd_toEndOf="parent" />
-
+   </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

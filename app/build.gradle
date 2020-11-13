@@ -44,6 +44,4 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
     compileOnly "org.projectlombok:lombok:1.18.12"
-
-
 }
