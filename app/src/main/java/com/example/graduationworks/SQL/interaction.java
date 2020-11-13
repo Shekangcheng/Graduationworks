@@ -8,6 +8,7 @@ public class interaction extends BmobObject {
     private String T_phone;
     private String date;
     private String state;
+    private String Teaching;
 
     public String getU_account() {
         return U_account;
@@ -23,6 +24,19 @@ public class interaction extends BmobObject {
 
     public void setT_account(String t_account) {
         T_account = t_account;
+    }
+
+    @Override
+    public String toString() {
+        return "interaction{" +
+                "U_account='" + U_account + '\'' +
+                ", T_account='" + T_account + '\'' +
+                ", T_name='" + T_name + '\'' +
+                ", T_phone='" + T_phone + '\'' +
+                ", date='" + date + '\'' +
+                ", state='" + state + '\'' +
+                ", Teaching='" + Teaching + '\'' +
+                '}';
     }
 
     public String getT_name() {
@@ -55,5 +69,13 @@ public class interaction extends BmobObject {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public String getTeaching() {
+        return Teaching;
+    }
+
+    public void setTeaching(String teaching) {
+        Teaching = teaching;
     }
 }

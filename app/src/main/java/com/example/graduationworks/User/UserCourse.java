@@ -1,5 +1,6 @@
 package com.example.graduationworks.User;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,6 +43,7 @@ public class UserCourse extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initialize(view);
         DATES();
+        OnClick();
     }
 
     private void initialize(View view){
@@ -65,13 +67,7 @@ public class UserCourse extends Fragment {
                     //封装数据
                     mTeacherData.clear();
                     for (interaction interaction : list) {
-                        //实例化
-                        interaction i = new interaction();
-                        String teacherName = interaction.getT_name();
-                        i.setT_name(teacherName);
-                        String teacherPhone = interaction.getT_phone();
-                        i.setT_phone(teacherPhone);
-                        mTeacherData.add(i);
+                        mTeacherData.add(interaction);
                         //设置数据
                         if (adapter != null) {
                             adapter.setUCata(mTeacherData);
@@ -82,6 +78,20 @@ public class UserCourse extends Fragment {
                     int errorCode = e.getErrorCode();
                     Log.d(TAG, "错误信息 ==> " + e.getMessage() + "\t错误码 ==> " + errorCode);
                 }
+            }
+        });
+    }
+    private void OnClick(){
+        adapter.setOnItemClickListener(new UCAdapter.OnItemClickListener() {
+            @Override
+            public void onClick(int position) {
+                interaction teacher = mTeacherData.get(position);
+                String T_account = teacher.getT_account();
+                String ObjectId=teacher.getObjectId();
+                Intent intent=new Intent(getContext(),U_C_teacherActivity.class);
+                intent.putExtra("T_account",T_account);
+                intent.putExtra("ObjectId",ObjectId);
+                startActivity(intent);
             }
         });
     }

@@ -250,7 +250,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/button_l"
-            android:text="开  始  授  课"
             android:textColor="#fff"
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"

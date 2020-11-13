@@ -6,16 +6,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.graduationworks.ForgetPassword.AccountNumber;
 import com.example.graduationworks.SQL.Teacher;
 import com.example.graduationworks.SQL.User;
 import com.example.graduationworks.Teacher.TeacherActivity;
 import com.example.graduationworks.User.UserActivity;
 import com.example.graduationworks.toolkit.AppContext;
-
 import java.util.List;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.exception.BmobException;

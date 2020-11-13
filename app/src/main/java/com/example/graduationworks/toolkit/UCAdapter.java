@@ -1,6 +1,7 @@
 package com.example.graduationworks.toolkit;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,14 @@ public class UCAdapter extends RecyclerView.Adapter<UCAdapter.ViewHolder> {
         //获取条目实例
         interaction course = mData.get(position);
         holder.setItemData(course);
+        holder.course_item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (listener != null) {
+                    listener.onClick(position);
+                }
+            }
+        });
     }
 
     @Override
@@ -63,4 +72,16 @@ public class UCAdapter extends RecyclerView.Adapter<UCAdapter.ViewHolder> {
             course_T_phone.setText(teacher_phone);
         }
     }
+
+    public interface OnItemClickListener {
+        void onClick(int position);
+    }
+
+    private UCAdapter.OnItemClickListener listener;
+
+    //第二步， 写一个公共的方法
+    public void setOnItemClickListener(UCAdapter.OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
 }

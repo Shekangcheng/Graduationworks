@@ -104,15 +104,7 @@ public class TeacherHomepage extends Fragment {
                     //封装数据
                     //interactionData.clear();
                     for (interaction interaction : list) {
-                        //实例化
-                        interaction i = new interaction();
-                        String date = interaction.getDate();
-                        i.setDate(date);
-                        String state = interaction.getState();
-                        i.setState(state);
-                        String id = interaction.getObjectId();
-                        i.setObjectId(id);
-                        interactionData.add(i);
+                        interactionData.add(interaction);
                         //设置数据
                         if (adapter != null) {
                             adapter.setTHData(interactionData);
@@ -139,7 +131,6 @@ public class TeacherHomepage extends Fragment {
                             if (monthOfYear >= calendar.get(Calendar.MONTH)) {
                                 if (dayOfMonth >= calendar.get(Calendar.DAY_OF_MONTH)) {
                                     time = year + "年" + (monthOfYear + 1) + "月" + dayOfMonth + "日";
-
                                     BmobQuery<Teacher> query = new BmobQuery<>();
                                     query.addWhereEqualTo("account", AppContext.account);
                                     synchronized (this) {
@@ -155,7 +146,7 @@ public class TeacherHomepage extends Fragment {
                                                         i.setState("未被预约");
                                                         i.setT_account(AppContext.account);
                                                         i.setU_account("");
-
+                                                        i.setTeaching("");
                                                         synchronized (this) {
                                                             i.save(new SaveListener<String>() {
                                                                 @Override
@@ -202,31 +193,27 @@ public class TeacherHomepage extends Fragment {
             @Override
             public void onClick(int position) {
                 list_position = position;
-                BmobQuery<interaction> cursor = new BmobQuery<>();
-                cursor.addWhereNotEqualTo("U_account", "");
-                cursor.findObjects(new FindListener<interaction>() {
-                    @Override
-                    public void done(List<interaction> list, BmobException e) {
-                        if (e == null && list.size() > 0) {
-                            interaction date = interactionData.get(list_position);
-                            String U_account = date.getU_account();
-                            Intent intent = new Intent(getContext(), T_UserinfoActivity.class);
-                            intent.putExtra("U_account", U_account);
-                            startActivity(intent);
-                        } else {
-                            Popup pop = Popup.getPop(getContext(), R.layout.date_pop_delete);
-                            PopupWindow win = pop.getWin();
-                            win.showAtLocation(view, Gravity.CENTER, 0, 0);
-                            View gender_popView = pop.getView();
-                            Button date_pop_f = gender_popView.findViewById(R.id.date_pop_f);
-                            date_pop_f.setOnClickListener(new TeacherHomepage.popItemClick(win));
-                            Button date_pop_t = gender_popView.findViewById(R.id.date_pop_t);
-                            date_pop_t.setOnClickListener(new TeacherHomepage.popItemClick(win));
-                            ConstraintLayout date_outer = gender_popView.findViewById(R.id.date_outer);
-                            date_outer.setOnClickListener(new TeacherHomepage.popItemClick(win));
-                        }
-                    }
-                });
+                interaction i= interactionData.get(position);
+                if (i.getState().equals("已被预约")) {
+                    interaction date = interactionData.get(list_position);
+                    String ObjectId = date.getObjectId();
+                    String U_account=date.getU_account();
+                    Intent intent = new Intent(getContext(), T_UserinfoActivity.class);
+                    intent.putExtra("ObjectId", ObjectId);
+                    intent.putExtra("U_account",U_account);
+                    startActivity(intent);
+                } else {
+                    Popup pop = Popup.getPop(getContext(), R.layout.date_pop_delete);
+                    PopupWindow win = pop.getWin();
+                    win.showAtLocation(view, Gravity.CENTER, 0, 0);
+                    View gender_popView = pop.getView();
+                    Button date_pop_f = gender_popView.findViewById(R.id.date_pop_f);
+                    date_pop_f.setOnClickListener(new TeacherHomepage.popItemClick(win));
+                    Button date_pop_t = gender_popView.findViewById(R.id.date_pop_t);
+                    date_pop_t.setOnClickListener(new TeacherHomepage.popItemClick(win));
+                    ConstraintLayout date_outer = gender_popView.findViewById(R.id.date_outer);
+                    date_outer.setOnClickListener(new TeacherHomepage.popItemClick(win));
+                }
             }
         });
     }

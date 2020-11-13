@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Teacher.T_UserinfoActivity"></activity>
+        <activity android:name=".User.U_C_teacherActivity"></activity>
+        <activity android:name=".Teacher.T_UserinfoActivity" />
         <activity android:name=".User.ReservationActivity" />
         <activity android:name=".User.U_TeacherInfoActivity" />
         <activity android:name=".Teacher.TeacherActivity" />
