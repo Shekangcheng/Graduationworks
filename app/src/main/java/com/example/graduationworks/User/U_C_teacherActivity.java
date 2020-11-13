@@ -35,7 +35,6 @@ public class U_C_teacherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_u_c_teacher);
         initialize();
         infor();
-        inquire();
         ButtonText();
         Teaching();
     }

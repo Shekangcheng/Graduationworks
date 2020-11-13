@@ -1,6 +1,7 @@
 package com.example.graduationworks.Teacher;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,13 +23,14 @@ public class T_UserinfoActivity extends AppCompatActivity {
     String ObjectId,U_account,state="";
     Button Start_teaching;
     TextView TUI_name,TUI_gender, TUI_age, TUI_phone, TUI_birthday, TUI_grade, TUI_e_mail, TUI_site;
+    private boolean run = false;
+    private final Handler handler = new Handler();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_t_userinfo);
         initialize();
         info();
-        inquire();
         ButtonText();
         Teaching();
     }
@@ -42,9 +44,21 @@ public class T_UserinfoActivity extends AppCompatActivity {
         TUI_e_mail =findViewById(R.id.TUI_e_mail);
         TUI_site =findViewById(R.id.TUI_site);
         Start_teaching=findViewById(R.id.Start_teaching);
+        //一秒刷新一次
+        run = true;
+        handler.postDelayed(task, 1000);
         ObjectId=getIntent().getStringExtra("ObjectId");
         U_account=getIntent().getStringExtra("U_account");
     }
+    private final Runnable task = new Runnable() {
+        @Override
+        public void run() {
+            // TODO Auto-generated method stub
+            if (run) {
+                handler.postDelayed(this, 1000);
+            }
+        }
+    };
     private void info() {
         BmobQuery<User> query = new BmobQuery<>();
         query.addWhereEqualTo("account",U_account);
