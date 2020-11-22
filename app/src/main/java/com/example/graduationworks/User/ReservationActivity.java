@@ -154,7 +154,7 @@ public class ReservationActivity extends AppCompatActivity {
                 case R.id.appointment:
                     String s = interactionData.get(list_position).getObjectId();
                     BmobQuery<interaction> cursor = new BmobQuery<>();
-                    String account[] = {s};
+                    String account= s;
                     cursor.addWhereContainsAll("objectId", Arrays.asList(account));
                     //
                     synchronized (this) {

@@ -26,6 +26,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import com.example.graduationworks.SQL.Teacher;
 import com.example.graduationworks.toolkit.AppContext;
 import com.example.graduationworks.toolkit.Popup;
 import com.example.graduationworks.R;
@@ -45,7 +46,7 @@ public class UserInfo extends Fragment implements View.OnClickListener {
     private static final String TAG = "UserInfo";
     Button top_up, U_info_change, pop_modification_confirm;
     int Year, Month, Day, control;
-    String time, birthday;
+    String time, birthday,account=AppContext.account;
     TextView U_F_i_name, U_F_i_gold, U_F_i_gender, U_F_i_age, U_F_i_phone, U_F_i_birthday, U_F_i_grade, U_F_i_e_mail, U_F_i_site, modification_hint;
     EditText modification_content;
     ConstraintLayout outer;
@@ -80,6 +81,7 @@ public class UserInfo extends Fragment implements View.OnClickListener {
         U_F_i_e_mail = view.findViewById(R.id.U_F_i_e_mail);
         U_F_i_site = view.findViewById(R.id.U_F_i_site);
         U_info_change = view.findViewById(R.id.U_info_change);
+        view.findViewById(R.id.top_up).setOnClickListener(this);
         view.findViewById(R.id.U_F_i_name).setOnClickListener(this);
         view.findViewById(R.id.linearLayout1).setOnClickListener(this);
         view.findViewById(R.id.linearLayout3).setOnClickListener(this);
@@ -195,7 +197,6 @@ public class UserInfo extends Fragment implements View.OnClickListener {
             //保存信息
             case R.id.U_info_change:
                 BmobQuery<User> cursor = new BmobQuery<>();
-                String account[] = {AppContext.account};
                 cursor.addWhereContainsAll("account", Arrays.asList(account));
                 //
                 synchronized (this) {
@@ -234,6 +235,40 @@ public class UserInfo extends Fragment implements View.OnClickListener {
                         }
                     });
                 }
+                break;
+            case R.id.top_up:
+                int i = Integer.valueOf(U_F_i_gold.getText().toString()).intValue();
+                i+=50;
+                BmobQuery<User> U_cursor = new BmobQuery<>();
+                U_cursor.addWhereContainsAll("account", Arrays.asList(account));
+                synchronized (this) {
+                    int I = i;
+                    U_cursor.findObjects(new FindListener<User>() {
+                        @Override
+                        public void done(List<User> list, BmobException e) {
+                            if (e == null) {
+                                for (User bmobUser : list) {
+                                    String ID = bmobUser.getObjectId();
+                                    bmobUser.setValue("gold", I);
+                                    bmobUser.update(ID, new UpdateListener() {
+                                        @Override
+                                        public void done(BmobException e) {
+                                            if (e == null) {
+                                                Log.i("", "成功");
+                                            } else {
+                                                Log.i("", "失败：" + e.getMessage());
+                                            }
+                                        }
+                                    });
+                                }
+                            } else {
+                                int errorCode = e.getErrorCode();
+                                Log.d(TAG, "失败：" + e.getMessage() + "\t错误码 ==> " + errorCode);
+                            }
+                        }
+                    });
+                }
+                U_F_i_gold.setText(i + "");
                 break;
         }
     }

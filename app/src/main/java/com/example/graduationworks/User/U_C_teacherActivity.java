@@ -10,11 +10,17 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.graduationworks.LoginActivity;
 import com.example.graduationworks.R;
 import com.example.graduationworks.SQL.Teacher;
+import com.example.graduationworks.SQL.User;
 import com.example.graduationworks.SQL.interaction;
 import com.example.graduationworks.Teacher.T_UserinfoActivity;
+import com.example.graduationworks.Teacher.TeacherActivity;
+import com.example.graduationworks.toolkit.AppContext;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
@@ -105,6 +111,35 @@ public class U_C_teacherActivity extends AppCompatActivity {
                     Toast.makeText(U_C_teacherActivity.this, "授课中", Toast.LENGTH_SHORT).show();
                 }
                 else if(inquire().equals("结束授课")){
+
+                    BmobQuery<User> cursor = new BmobQuery<>();
+                    cursor.addWhereEqualTo("account", AppContext.account);
+                    cursor.findObjects(new FindListener<User>() {
+                        @Override
+                        public void done(List<User> list, BmobException e) {
+                            if (e == null && list.size() > 0) {
+                                for (User bmobUser : list) {
+                                    BmobQuery<Teacher> cursor = new BmobQuery<>();
+                                    cursor.addWhereEqualTo("account", AppContext.account);
+                                    cursor.findObjects(new FindListener<Teacher>() {
+                                        @Override
+                                        public void done(List<Teacher> list, BmobException e) {
+                                            if (e == null && list.size() > 0) {
+                                                for (Teacher bmobTeacher : list) {
+                                                    int i=bmobUser.getGold();
+                                                    int price=bmobTeacher.getPrice();
+                                                    int y=bmobTeacher.getGold()+price;
+                                                    int z=i-price;
+                                                    bmobUser.setValue("gold",z);
+                                                    bmobTeacher.setValue("gold",y);
+                                                }
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    });
                     notarize.setText("确  认  结  束");
                     interaction i = new interaction();
                     i.setObjectId(ObjectId);
@@ -118,6 +153,7 @@ public class U_C_teacherActivity extends AppCompatActivity {
                             }
                         }
                     });
+
                 }
             }
         });
